@@ -54,6 +54,19 @@
         
         .loader { display: none; width: 50px; height: 50px; border: 6px solid var(--white); border-bottom-color: var(--yellow); border-radius: 50%; animation: rotation 1s linear infinite; margin: 20px auto; }
         @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        #installBtn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    background: #2ecc71 !important;
+    color: white !important;
+    border: 3px solid black !important;
+    padding: 15px 30px !important;
+    font-size: 1.2rem !important;
+    display: none; /* Controlled by JS */
+}
     </style>
 </head>
 <body>
@@ -1450,14 +1463,24 @@
 
     try {
         // Points to your Vercel API
-        const response = await fetch("/api/brain", {
+        // Use the FULL Vercel URL here if you are testing from GitHub Pages
+        const response = await fetch("https://eli-alpha.vercel.app/api/brain", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ topic, lang, mode: currentMode, category })
         });
 
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(errorText);
+        }
+
         const data = await response.json();
-        document.getElementById('aiResponse').innerText = data.explanation;
+        
+        // Ensure explanation exists
+        if (data.explanation) {
+            document.getElementById('aiResponse').innerText = data.explanation;
+        }
         
         // Build 5 Quizzes
         let qH = `<h3 style="color:black">Test Your Knowledge!</h3>`;
@@ -1491,26 +1514,15 @@
     const text = document.getElementById('aiResponse').innerText;
     const msg = new SpeechSynthesisUtterance(text);
     
-    // Voice Selection Logic
-    const voices = window.speechSynthesis.getVoices();
-    const langMap = { "English": "en", "Hindi": "hi", "Gujarati": "gu", "Spanish": "es", "French": "fr" };
-    const targetLang = langMap[document.getElementById('lang').value];
+    const langMap = { "English": "en-US", "Hindi": "hi-IN", "Gujarati": "gu-IN" };
+    msg.lang = langMap[document.getElementById('lang').value] || "en-US";
 
-    // FIND BEST VOICE: Prefers Google/Natural voices for native clarity
-    const bestVoice = voices.find(v => v.lang.startsWith(targetLang) && (v.name.includes("Google") || v.name.includes("Natural"))) || 
-                      voices.find(v => v.lang.startsWith(targetLang));
-
-    if (bestVoice) {
-        msg.voice = bestVoice;
-    } else {
-        console.warn("High quality voice not found for this language.");
-    }
-
-    msg.rate = 0.85; // Slightly slower makes pronunciation clearer in Gujarati/Hindi
-    msg.pitch = 1.0; 
+    // This forces a slower, clearer delivery which fixes the "accent" feel
+    msg.rate = 0.8; 
+    msg.pitch = 1.1; 
+    
     window.speechSynthesis.speak(msg);
 }
-        
         let deferredPrompt;
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
