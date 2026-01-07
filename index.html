@@ -161,10 +161,582 @@
         let currentMode = "Facts";
 
         const DATA = {
-            "Science": ["Gravity", "Photosynthesis", "Black Holes"],
-            "Technology": ["AI", "Robotics", "Blockchain"],
-            "Space": ["Planets", "Galaxies", "Stars"],
-            "Health": ["How the Heart Works", "Why we Sleep", "Germs"]
+           "Science": [
+    "Gravity", "Photosynthesis", "Black Holes", "Microbes/Germs", "Evolution",
+    "Atoms and Molecules", "The Human Heart", "Vaccines", "Sound Waves", "Light",
+    "Solar System", "Weather & Climate", "Electricity", "Magnets", "Plants",
+    "Animals", "Fossils & Dinosaurs", "Forces & Motion", "Energy Types",
+    "Water Cycle", "Simple Machines"
+  ],
+
+    "Technology": [
+        "Artificial Intelligence (AI)", "Robotics", "How Computers Work", "Blockchain",
+        "Virtual Reality (VR)", "3D Printing", "Social Media", "Bluetooth", 
+        "Self-Driving Cars", "Algorithms"
+    ],
+    "History": [
+        "The Roman Empire", "Ancient Egypt", "Medieval Castles", "World War II", 
+        "The Dinosaurs (Extinction)", "The First Moon Landing", "How Fire Was Discovered", 
+        "The Titanic", "The Great Wall of China", "Famous Explorers"
+    ],
+    "Mathematics": [
+        "Numbers", "Addition", "Subtraction", "Multiplication", "Division",
+        "Fractions", "Geometry", "Shapes", "Patterns", "Time & Clock Reading",
+        "Money & Counting Coins", "Measurement", "Graphs & Charts", "Place Value",
+        "Decimals", "Basic Algebra (Kids)", "Math Puzzles"
+    ],
+    "English Language": [
+        "Alphabet", "Phonics", "Rhyming Words", "Basic Grammar", "Parts of Speech",
+        "Synonyms & Antonyms", "Vocabulary Builder", "Reading Comprehension",
+        "Storytelling", "Spelling", "Sentence Formation", "Idioms for Kids"
+    ],
+    "General Knowledge": [
+        "World Records", "Famous Inventors", "Famous Scientists",
+        "Important Inventions", "Continents & Oceans", "World Countries & Capitals",
+        "Flags of the World", "National Symbols", "Indian States & Capitals",
+        "Currencies of the World", "Famous Landmarks", "World Wonders",
+        "Famous Sports Personalities", "Books & Authors (Kids)",
+        "Festivals of the World", "Important Days & Dates",
+        "World Organisations (UN, WHO, etc.)", "Largest & Smallest in the World",
+        "First in the World & India", "Famous Children Stories"
+    ],
+
+    "Geography": [
+        "Volcanoes", "Deserts", "The North Pole", "Ocean Trenches", "Earthquakes", 
+        "Rivers and Lakes", "Mountains", "The Seven Continents", "Maps and Globes", "Tides"
+    ],
+    "Polity/Government": [
+        "Democracy", "What is a Constitution", "Elections", "Taxes", "The United Nations (UN)", 
+        "Laws and Rules", "The Police", "Citizenship", "The President/Prime Minister", "The Flag"
+    ],
+    "Computers": [
+        "How CPUs work", "The Internet", "Coding/Programming", "Operating Systems", 
+        "Cyber Security", "Viruses and Malware", "The Cloud", "Data Storage (Memory)", 
+        "Computer Games", "Apps"
+    ],
+    "Space & Astronomy": [
+        "Planets", "Stars", "Galaxy", "Universe", "Rocket Science (Basics)",
+        "Astronauts", "Space Missions (Chandrayaan, Apollo)", "Moon Phases",
+        "Constellations", "Telescopes"
+    ],
+    "Environment": [
+        "Recycling", "Pollution", "Green Energy", "Save Water",
+        "Climate Change", "Ozone Layer", "Forest Life", "Endangered Animals",
+        "Earth Day", "Conservation Heroes"
+    ],
+
+    "Biology": [
+        "Human Body Parts", "Bones & Muscles", "Plants & Trees",
+        "Life Cycle of Animals", "Brain & Nervous System", "Digestive System",
+        "Respiratory System", "Cells", "Blood & Circulation", "Nutrition & Food"
+    ],
+
+    "Physics": [
+        "Motion", "Heat", "Light", "Sound", "Electric Circuits",
+        "Magnetism", "Energy", "Friction", "Force", "Pressure"
+    ],
+
+    "Chemistry": [
+        "States of Matter", "Chemical Reactions (Safe Examples)",
+        "Mixtures & Solutions", "Acids & Bases (Kid-safe)", "Periodic Table (Basics)",
+        "Metals & Non-metals", "Crystals", "Air & Gases"
+    ],
+    "Animals": [
+        "Whales", "Insects", "Dinosaurs", "Mammals", "Endangered Animals", 
+        "Birds (Feathers and Flight)", "Reptiles", "Pet Care", "Camouflage", 
+        "Animal Communication"
+    ],
+    "Everyday Concepts": [
+        "Money", "Time", "Electricity", "Magnets", "Reflections (Mirrors)", 
+        "How Cars Move", "Why We Need Sleep", "Traffic Lights", "Recycling", "Batteries"
+    ],
+    "Emotions": [
+        "Happiness", "Sadness", "Fear", "Anger", "Empathy", "Dreams", 
+        "Memory", "Shyness", "Being Brave", "Kindness"
+    ],
+    "Moral Education": [
+        "Good Habits", "Kindness", "Honesty", "Helping Nature",
+        "Respect", "Teamwork", "Sharing", "Self-Discipline", "Manners",
+        "Caring for Animals"
+    ],
+    "Sports": [
+        "Cricket Basics", "Football Basics", "Olympics",
+        "Indoor Games", "Outdoor Games", "Famous Athletes",
+        "Rules of Popular Sports", "Yoga for Kids"
+    ],
+    "Art & Culture": [
+        "Music and Instruments", "Painting", "Sculptures", "Poetry", "Different Languages", 
+        "Theatre", "Festivals", "Sports Rules", "Why People Wear Different Clothes", "Storytelling"
+    ],
+    "Indian Knowledge": [
+        "Famous Indians", "Indian Festivals", "Indian Culture",
+        "National Symbols", "Indian Freedom Fighters",
+        "Indian Space Programs", "Indian Foods", "Indian Monuments"
+    ],
+    "Life Skills": [
+        "Decision Making", "Problem Solving", "Time Management",
+        "Basic Money Skills", "Communication Skills", "Leadership",
+        "Goal Setting", "Daily Routine Planning"
+    ],
+    "Health & Body": [
+        "Bones and Muscles", "Eating Healthy Food", "Breathing", "Why We Get Sick", 
+        "Doctors and Hospitals", "Brushing Teeth", "The Brain", "Exercise", "Allergies", "Blood", "How do body parts work"
+    ],
+
+
+
+
+"Economics & Money": [
+    "What is a Bank", "How ATMs Work", "Saving & Budgeting",
+    "Demand & Supply (Kids)", "What Are Taxes Used For",
+    "Goods vs Services", "How Businesses Work"
+],
+
+"Psychology": [
+    "How the Brain Makes Decisions", "Habits & Routines", "Why We Dream",
+    "Growth Mindset", "Why We Forget Things", "Understanding Motivation"
+],
+
+"Health & Safety": [
+    "First Aid Basics", "Road Safety Rules", "Fire Safety",
+    "Internet Safety for Kids", "Hygiene Rules", "Emergency Numbers & Help"
+],
+
+"Creativity & Arts": [
+    "Drawing Techniques", "Cartooning", "Origami",
+    "Clay Modelling", "Colour Theory", "Creative Writing for Kids"
+],
+
+"Food & Nutrition": [
+    "What Are Vitamins", "Healthy Snacks", "How Digestion Works (Kids)",
+    "Where Food Comes From", "Food Groups", "Food Safety & Cleanliness",   "Food groups", "Healthy food",
+    "How Digestion Works (Kids)", "Where Food Comes From",
+    "Healthy vs Unhealthy food", "Food Safety & Cleanliness", "Details of Vitamins"
+],
+
+"Transportation": [
+    "How Airplanes Fly", "How Trains Work", "Bicycles & Gears",
+    "Ships & Submarines", "Traffic Rules", "Future Transport (Hyperloop)"
+],
+
+"Careers & Future Jobs": [
+    "What Scientists Do", "Becoming a Doctor", "Space Careers",
+    "Digital Creators", "Engineers & Inventors", "Wildlife Researchers"
+],
+
+"Culture & Society": [
+    "World Traditions", "Family Structures", "Manners Around the World",
+    "Languages of the World", "Food Cultures", "Traditional Clothing"
+],
+
+"Logic & Critical Thinking": [
+    "Puzzles & Riddles", "Logical Reasoning", "Spot the Pattern",
+    "Sequencing", "Cause & Effect", "Analogies"
+],
+
+"Ethics & Values": [
+    "Fairness", "Responsibility", "Respecting Privacy",
+    "Environmental Responsibility", "Anti-Bullying", "Equality"
+],
+
+"Daily Life Skills": [
+    "Doing Basic Household Tasks", "Packing a School Bag", "Cleaning & Tidying",
+    "Shopping Basics", "How to Use Public Transport", "Understanding Labels"
+],
+
+"Weather & Natural Disasters": [
+    "Floods", "Droughts", "Hurricanes & Cyclones",
+    "Tsunamis", "Lightning", "Weather Forecasting"
+],
+
+"Mythology & Folk Stories": [
+    "Greek Mythology", "Indian Mythology", "Norse Mythology",
+    "Folk Tales Around the World", "Fairy Tales Explained", "Legends & Heroes"
+],
+
+"Family & Relationships": [
+    "Roles of Family Members", "Helping at Home", "Respecting Elders",
+    "Sibling Bonds", "Handling Conflicts", "Family Support"
+],
+
+"Media & Entertainment": [
+    "How Movies Are Made", "Animation Basics", "Music Genres",
+    "Comics & Superheroes", "Radio vs Television", "How News Works"
+],
+
+"Agriculture & Farming": [
+    "How Crops Grow", "Types of Farming", "Farm Animals",
+    "Organic Farming", "Irrigation", "Farm Machines"
+],
+
+"Architecture & Structures": [
+    "How Bridges Work", "Skyscrapers", "Tunnels",
+    "Houses Around the World", "Ancient Structures", "Building Materials"
+],
+
+"Oceans & Marine Life": [
+    "Coral Reefs", "Deep Sea Creatures", "Waves & Currents",
+    "Ocean Exploration", "Marine Plants", "Underwater Volcanoes"
+],
+
+"Hobbies & Recreation": [
+    "Gardening", "Bird Watching", "Stamp/ Coin Collecting",
+    "Camping", "Playing Instruments", "Photography Basics"
+],
+
+"Finance for Kids": [
+    "What Is Salary", "Pocket Money", "Profit & Loss (Simple)",
+    "Saving vs Spending", "Digital Payments", "What Is Insurance (Simple)"
+],
+
+
+
+
+
+
+"Economics & Money": [
+    "What is a Bank", "How ATMs Work", "Financial terminologies",
+    "Demand & Supply (Kids)", "What Are Taxes Used For",
+    "Goods vs Services", "History of Money", "Business ideas"
+],
+
+
+"Psychology": [
+    "How the Brain Makes Decisions", "Habits & Routines", "Why We Dream",
+    "Growth Mindset", "Why We Forget Things", "Understanding Motivation"
+],
+
+
+"Health & Safety": [
+    "First Aid Basics", "Road Safety Rules", "Fire Safety",
+    "Internet Safety for Kids", "Hygiene Rules",
+    "Emergency Numbers & Help"
+],
+
+
+"Creativity & Arts": [
+    "Drawing Techniques", "Landscaping", "Origami",
+    "Clay Modelling", "Colour Theory", "Creative Writing for Kids"
+],
+
+
+
+
+
+"Transportation": [
+    "Inventions of aeroplanes", "How Trains Work",
+    "Bicycles & Gears", "Ships & Submarines",
+    "What is Hyperloop", "Future Transport"
+],
+
+
+"Careers & Future Jobs": [
+    "Jobs and Occupations", "Different types of Doctors",
+    "Space Careers", "Best jobs ever", "High paying jobs"
+],
+
+
+"Culture & Society": [
+    "World Traditions", "Family Structures",
+    "Manners Around the World", "Languages of the World",
+    "World cuisines", "Traditional Clothing"
+],
+
+
+"Logic & Critical Thinking": [
+    "Puzzles & Riddles", "Logical Reasoning", "Spot the Pattern",
+    "Sequencing", "Cause & Effect", "Foundational thinking",
+    "Matching, Sorting and games", "Analogy"
+],
+
+
+"Ethics & Values": [
+    "Honesty", "Responsibility", "Respecting Privacy",
+    "Environmental Responsibility", "Anti-Bullying", "Equality"
+],
+
+
+"Daily Life Skills": [
+    "Doing Basic Household Tasks", "Packing a School Bag",
+    "Cleaning & Tidying", "Shopping Basics",
+    "Talk about Public Transport", "Understanding Labels"
+],
+
+
+"Weather & Natural Disasters": [
+    "Floods", "Droughts", "Hurricanes & Cyclones",
+    "Tsunamis", "Lightning", "Cyclone",
+    "Natural disasters names"
+],
+
+
+"Mythology & Folk Stories": [
+    "Greek Mythology", "Indian Mythology", "Norse Mythology",
+    "Folk Tales Around the World", "Fairy Tales Explained",
+    "Myths | Legends | Folk tales | Fairy tales",
+    "Mahabharat", "Ramayan"
+],
+
+"Stories": [
+    "Family stories", "Adventure stories", "Moral stories",
+    "Bedtime stories", "Fairy tales",
+    "Alice's wonderland",
+    "Aladdin and magic lamp", "Haatim tai",
+    "Arabian nights", "Panchtantra"
+],
+
+"Movies": [
+    "Little krishna", "Bal ganesh", "Tenali rama",
+    "Akbar birbal", "Vikram betal","Little singham","Motu patlu"
+],
+
+"Causes of Diseases": [
+    "Diabetes", "Malaria", "Chicken Pox",
+    "Allergies", "Typhoid","TB","Asthama",
+     "Diarrhoea", "Dandruff", "Heartattack",
+    "Kidney stones", "Appendix","Alzheimer","Hiccups",
+     "Head lice", "Dyslexia","Hand,foot & mouth disease","Depression","Pimples"
+],
+
+"Harmful effects of food": [
+    "Sugar", "Junk food", "Milk",
+    "Fruit juice", "Coffee","Tea","Cold drinks","Processed food","Burger"
+],
+
+
+
+
+"Ancient Civilisation": [
+  "Mayans", "Vikings", "Indus Valley", "Harappan",
+  "Mohenjo Daro", "Ancient Greece", "Aztecs", "Inca",
+  "Mesopotamia", "Ming Dynasty", "Ancient Persia", "Stone Age"
+],
+
+"Coding Concepts": [
+  "What Is a Bug", "What Are Loops", "What Are Variables",
+  "What Are Binary Codes", "What Are IF-ELSE Statements",
+  "What Are Functions", "What Are Classes", "What Is OOPS",
+  "Types of Hackers", "Vocabulary", "How Do Search Engines Work"
+],
+
+"Music Theory": [
+  "Music Theory", "Rhythm vs Pulse", "Melody vs Harmony",
+  "Pitch (High & Low)", "Tempo (Speed)", "Chords",
+  "Orchestra Sections", "Treble and Bass Clef", "Scales"
+],
+
+"Ice Age Animals": [
+  "Woolly Mammoth", "Saber-Toothed Tiger vs Woolly Mammoth",
+  "Megalodon", "Dodo Bird", "Giant Sloth",
+  "Dire Wolf", "Woolly Rhinoceros", "Terror Birds",
+  "Irish Elk", "Glyptodon"
+],
+
+"Deep Space Objects": [
+  "Nebula", "Supernova", "Comets, Asteroids and Meteors",
+  "Dwarf Planet Pluto", "Black Dwarf Star", "Exoplanets",
+  "Space Exploration", "Space Debris", "The Kuiper Belt"
+],
+
+"Engineering Marvels": [
+  "Panama Canal", "Channel Tunnel", "Burj Khalifa",
+  "Golden Gate Bridge", "International Space Station",
+  "Hoover Dam", "Aqueducts", "Suspension Bridges",
+  "Bullet Trains", "Underwater Foundation", "Chenab Bridge"
+],
+
+"Autobiographies": [
+  "Bhagat Singh",
+  "A. P. J. Abdul Kalam",
+  "J. Robert Oppenheimer",
+  "Abraham Lincoln",
+  "Adolf Hitler",
+  "Swami Vivekananda",
+  "Kalpana Chawla",
+  "Albert Einstein",
+  "Martin Luther King Jr.",
+  "Nikola Tesla",
+  "Nelson Mandela",
+  "Elon Musk",
+  "Bill Gates",
+  "Cristiano Ronaldo",
+  "Pelé"
+],
+
+"Inventions": [
+  "Paper",
+  "Steam Engine",
+  "Telephone",
+  "Television",
+  "Electric Bulb",
+  "Microwave Oven",
+  "Refrigerator",
+  "Washing Machine",
+  "Mobile Phone",
+  "Airplanes",
+  "Computer",
+  "Electricity",
+  "Email",
+  "Camera",
+  "Zero"
+],
+
+"The five senses": [
+  "Taste",
+  "Hearing",
+  "Smell",
+  "Touch",
+  "Sight",
+  "All Five Senses"
+],
+
+
+"Rocks & Minerals": [
+  "Rocks and Minerals",
+  "Types of Rocks",
+  "Rock Cycle",
+  "Rock Uses",
+  "Soil and Types"
+],
+
+"Dog Breeds": [
+  "100 Dog Breeds",
+  "Golden Retriever",
+  "German Shepherd",
+  "Doberman",
+  "Labrador",
+  "Bulldog",
+  "Pomeranian",
+  "Siberian Husky",
+  "Dalmatian",
+  "Beagle",
+  "Chihuahua"
+],
+
+"Secret Codes": [
+  "Morse Code",
+  "Invisible Ink",
+  "Fingerprints",
+  "Caesar Cipher"
+],
+
+"Basic Concepts": [
+  "MS Word",
+  "MS Excel",
+  "MS PowerPoint",
+  "Server",
+  "Google Drive",
+  "Google Docs",
+  "Google Sheets",
+  "Google Maps",
+  "Gmail"
+],
+
+"Natural Wonders of the World": [
+  "Northern Lights",
+  "Grand Canyon",
+  "Great Barrier Reef",
+  "Mount Everest",
+  "Victoria Falls",
+  "Dead Sea",
+  "Amazon Rainforest",
+  "Paricutin Volcano",
+  "Harbor of Rio",
+  "The Nile River"
+],
+
+
+
+
+"Benefits of various vegetables": [
+  "Spinach", "Lettuce", "Cabbage", "Kale", "Swiss Chard",
+  "Mustard Greens", "Collard Greens", "Arugula", "Fenugreek Leaves",
+  "Coriander Leaves", "Parsley", "Basil", "Mint", "Dill", "Sorrel",
+  "Bok Choy", "Napa Cabbage", "Endive", "Radicchio", "Watercress",
+  "Carrot", "Beetroot", "Radish", "Turnip", "Sweet Potato", "Potato",
+  "Yam", "Cassava", "Parsnip", "Rutabaga", "Salsify", "Taro Root",
+  "Burdock Root", "Jerusalem Artichoke", "Onion", "Garlic", "Shallot",
+  "Leek", "Spring Onion", "Fennel Bulb", "Celery", "Asparagus",
+  "Bamboo Shoots", "Kohlrabi", "Lotus Stem", "Rhubarb", "Cauliflower",
+  "Broccoli", "Artichoke", "Banana Flower", "Broccolini", "Romanesco",
+  "Tomato", "Brinjal", "Capsicum", "Chili Pepper", "Cucumber",
+  "Pumpkin", "Bottle Gourd", "Ridge Gourd", "Sponge Gourd",
+  "Bitter Gourd", "Snake Gourd", "Ash Gourd", "Zucchini", "Squash",
+  "Okra (Ladyfinger)", "Chayote", "Tomatillo", "Jalapeño",
+  "Habanero Peppers", "Green Peas", "Chickpeas", "French Beans",
+  "Cluster Beans", "Broad Beans", "Soybeans", "Lentil Pods",
+  "Cowpeas", "Snow Peas", "Sugar Snap Peas", "Mushroom",
+  "Shiitake Mushrooms", "Oyster Mushroom", "Enoki Mushrooms",
+  "Portobello Mushrooms", "Morel Mushrooms", "Drumstick",
+  "Banana Stem", "Winged Beans", "Malabar Spinach",
+  "Amaranth Leaves", "Elephant Foot Yam", "Water Chestnut",
+  "Seaweed", "Pointed Gourd", "Daikon Radish", "Wasabi Root",
+  "Lotus Root", "Perilla Leaves", "Curry Leaves", "Lemongrass",
+  "Chives", "Oregano", "Thyme", "Rosemary", "Sage",
+  "Fiddlehead Fern", "Celeriac", "Jicama", "Kangkong",
+  "Ivy Gourd", "Teasel Gourd"
+],
+
+
+
+
+
+
+
+"Benefits of various fruits": [
+    "Apple", "Banana", "Orange", "Mango", "Grapes",
+    "Papaya", "Pineapple", "Watermelon", "Muskmelon", "Pear",
+
+    "Lemon", "Lime", "Mandarin", "Tangerine", "Clementine",
+    "Grapefruit", "Pomelo", "Sweet orange", "Bergamot",
+
+    "Strawberry", "Blueberry", "Raspberry", "Blackberry",
+    "Cranberry", "Gooseberry", "Mulberry", "Elderberry", "Boysenberry",
+
+    "Coconut", "Jackfruit", "Lychee", "Longan", "Rambutan",
+    "Durian", "Passion fruit", "Guava", "Star fruit", "Dragon fruit",
+    "Breadfruit", "Soursop", "Custard apple", "Sugar apple",
+    "Sapodilla", "Mangosteen",
+
+    "Peach", "Plum", "Cherry", "Apricot", "Nectarine",
+    "Olive", "Dates",
+
+    "Quince", "Medlar",
+
+    "Jamun", "Bael", "Wood apple", "Kokum", "Karonda",
+    "Phalsa", "Langsat", "Salak",
+
+    "Almond", "Cashew", "Walnut", "Pistachio", "Hazelnut",
+    "Brazilnut", "Macadamia", "Pecan", "Arecanut", "Raisins",
+
+    "Miracle fruit", "Jabuticaba",
+    "Feijoa", "Horned melon", "Lucuma", "Santol",
+    "Surinam cherry", "Ice apple",
+
+    "Kiwi", "Fig", "Pomegranate", "Avocado",
+    "Persimmon", "Tamarind", "Loquat"
+],
+
+
+
+"Miscellaneous": [
+ "Advantages of drinking water",
+     "How do plants help us",
+     "Categories of animals",
+     "Animals and their sounds",
+     "Vertebrates & Invertebrates",
+     "Types of water bodies",
+     "Names of animals,birds & flowers",
+     "Musical instruments",
+     "Names and sounds of birds",
+     "Vehicle names",
+     "Carnivores,herbivores,omnivores",
+     "Human body",
+     "Toddler learning",
+     "Finger abacus",
+     "Scientific instruments"
+]
+
         };
 
 
