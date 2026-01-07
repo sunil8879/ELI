@@ -1550,40 +1550,46 @@ function tab(e, id) {
 
 
 let deferredPrompt;
+const installBtn = document.getElementById('installBtn');
 
-// 1. Listen for the browser's install invitation
+// 1. Listen for the install prompt
 window.addEventListener('beforeinstallprompt', (e) => {
-    console.log("PWA: Install prompt available");
+    console.log('PWA: beforeinstallprompt fired');
     e.preventDefault();
     deferredPrompt = e;
-    // Show the button
-    const btn = document.getElementById('installBtn');
-    btn.style.display = 'inline-block'; 
+    // Show the button now that we know the app is installable
+    installBtn.style.display = 'inline-block';
 });
 
-// 2. Handle the click
-document.getElementById('installBtn').addEventListener('click', async () => {
+// 2. Click handler
+installBtn.addEventListener('click', async () => {
     if (deferredPrompt) {
-        // The browser supports the prompt
         deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice;
         if (outcome === 'accepted') {
-            document.getElementById('installBtn').style.display = 'none';
+            installBtn.style.display = 'none';
         }
         deferredPrompt = null;
     } else {
-        // Fallback for iOS/Safari or if the prompt was missed
-        alert("To install: \n1. Tap the 'Share' button (at the bottom/top of your browser).\n2. Select 'Add to Home Screen' ➕");
+        // Fallback for iOS/Safari where beforeinstallprompt doesn't exist
+        alert("To Install on iPhone/iPad:\n1. Tap 'Share' (bottom icon)\n2. Select 'Add to Home Screen' ➕");
     }
+});
+
+// 3. Hide button if already installed
+window.addEventListener('appinstalled', () => {
+    installBtn.style.display = 'none';
+    deferredPrompt = null;
 });
 
     </script>
     <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js')
-        .then(reg => console.log('Service Worker Registered!'))
-        .catch(err => console.log('Service Worker Error:', err));
+      // Use './sw.js' to ensure it works in your GitHub subfolder
+      navigator.serviceWorker.register('./sw.js')
+        .then(reg => console.log('SW Registered'))
+        .catch(err => console.log('SW Error', err));
     });
   }
 </script>
