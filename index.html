@@ -1540,6 +1540,17 @@ document.getElementById('installBtn').addEventListener('click', async () => {
         deferredPrompt = null;
     }
 });
+
+
+function tab(e, id) {
+    // Hide all contents
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    // Deactivate all buttons
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    // Show selected content and activate button
+    document.getElementById(id).classList.add('active');
+    e.currentTarget.classList.add('active');
+}
     </script>
     <script>
   if ('serviceWorker' in navigator) {
