@@ -99,11 +99,14 @@
 </div>  
         
 
-        <div class="video-frame">
-            <video id="introVideo" autoplay muted loop playsinline>
-                <source src="INTRO.mp4" type="video/mp4">
-            </video>
-        </div>
+        <div class="video-frame" onclick="toggleMute()" style="cursor:pointer; position:relative;">
+    <video id="introVideo" autoplay muted loop playsinline>
+        <source src="INTRO.mp4" type="video/mp4">
+    </video>
+    <div id="muteOverlay" style="position:absolute; bottom:10px; left:10px; background:rgba(0,0,0,0.5); color:white; padding:5px 10px; border-radius:5px; font-size:12px;">
+        <i class="fas fa-volume-mute"></i> Click for Sound
+    </div>
+</div>
 
         <div class="glass-card">
             <div class="mode-toggle">
@@ -1511,7 +1514,12 @@
 
         // FIXED RELEVANT IMAGE (Contextual Prompting)
         const imgContext = `edible fruit nature organic -phone -gadget`;
-        document.getElementById('aiImg').src = `https://image.pollinations.ai/prompt/3d-pixar-style-render-of-${topic}-as-a-${category}-${imgContext}?width=1080&height=1080&nologo=true`;
+        // Build a highly descriptive prompt to force relevance
+const categoryContext = catS.value; // e.g., "Food & Nutrition"
+const imageStyle = "3D Pixar style, vibrant colors, white background, high detail, educational";
+const imageQuery = `${topic} (${categoryContext}) no-technology edible organic nature`;
+
+document.getElementById('aiImg').src = `https://image.pollinations.ai/prompt/${encodeURIComponent(imageQuery + " " + imageStyle)}?width=1080&height=1080&nologo=true`;
         
         document.querySelector('#vid iframe').src = `https://www.youtube.com/embed/${VIDEO_DB[topic] || 'HAijfhtJs7w'}`;
         loader.style.display = "none"; res.style.display = "block";
@@ -1530,13 +1538,19 @@
     const text = document.getElementById('aiResponse').innerText;
     const msg = new SpeechSynthesisUtterance(text);
     
-    const langMap = { "English": "en-US", "Hindi": "hi-IN", "Gujarati": "gu-IN" };
+    const langMap = { "English": "en-IN", "Hindi": "hi-IN", "Gujarati": "gu-IN", "Spanish": "es-ES" };
     msg.lang = langMap[document.getElementById('lang').value] || "en-US";
 
-    // This forces a slower, clearer delivery which fixes the "accent" feel
-    msg.rate = 0.8; 
-    msg.pitch = 1.1; 
+    // FIND NEUTRAL VOICE
+    const voices = window.speechSynthesis.getVoices();
+    // Prioritize "Google" or "Natural" voices which are neutral/pro
+    const neutralVoice = voices.find(v => v.lang.includes(msg.lang) && (v.name.includes("Google") || v.name.includes("Natural"))) 
+                       || voices.find(v => v.lang.includes(msg.lang));
     
+    if (neutralVoice) msg.voice = neutralVoice;
+    
+    msg.rate = 0.85; // Slightly slower = Better clarity
+    msg.pitch = 1.0; 
     window.speechSynthesis.speak(msg);
 }
         
@@ -1588,6 +1602,13 @@ window.addEventListener('appinstalled', () => {
     installBtn.style.display = 'none';
     deferredPrompt = null;
 });
+
+function toggleMute() {
+    const v = document.getElementById('introVideo');
+    const overlay = document.getElementById('muteOverlay');
+    v.muted = !v.muted;
+    overlay.innerHTML = v.muted ? '<i class="fas fa-volume-mute"></i> Click for Sound' : '<i class="fas fa-volume-up"></i> Sound On';
+}
 
     </script>
     <script>
