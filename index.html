@@ -57,7 +57,7 @@
         
         #installBtn {
     position: fixed;
-    top: 20px;
+    bottom: 20px;
     right: 20px;
     z-index: 9999;
     background: #2ecc71 !important;
@@ -1523,23 +1523,34 @@
     
     window.speechSynthesis.speak(msg);
 }
-        let deferredPrompt;
+        
+let deferredPrompt;
+
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    document.getElementById('installBtn').style.display = 'inline-block';
+
+    const installBtn = document.getElementById('installBtn');
+    installBtn.style.display = 'block';
 });
 
-document.getElementById('installBtn').addEventListener('click', async () => {
-    if (deferredPrompt) {
+document.addEventListener('DOMContentLoaded', () => {
+    const installBtn = document.getElementById('installBtn');
+
+    installBtn.addEventListener('click', async () => {
+        if (!deferredPrompt) return;
+
         deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice;
+
         if (outcome === 'accepted') {
-            document.getElementById('installBtn').style.display = 'none';
+            installBtn.style.display = 'none';
         }
+
         deferredPrompt = null;
-    }
+    });
 });
+
 
 
 function tab(e, id) {
