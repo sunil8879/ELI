@@ -3,112 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="manifest" href="manifest.json">
-    <title>ELI5 Pro - Extreme Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <title>ELI5 Pro - Premium Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        :root { --primary: #1877F2; --accent: #FF4500; --turq: #40E0D0; --success: #2ecc71; }
+        :root { --blue: #0866FF; --yellow: #FFD700; --white: #FFFFFF; --black: #000000; }
         
         body {
             margin: 0; font-family: 'Poppins', sans-serif;
-            background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #1877F2);
-            background-size: 400% 400%; animation: gradientBG 10s ease infinite;
-            min-height: 100vh; color: white; display: flex; justify-content: center; padding: 20px;
+            background-color: var(--blue); color: var(--black);
+            display: flex; justify-content: center; padding: 20px;
         }
-        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
         .container { width: 100%; max-width: 900px; }
         .logo-section { text-align: center; margin-bottom: 30px; }
-        .main-logo { font-family: 'Oswald'; font-size: 80px; margin: 0; text-shadow: 8px 8px 0px rgba(0,0,0,0.3); }
-        .edition-badge { background: #000; padding: 8px 25px; border-radius: 50px; font-weight: 800; transform: rotate(-3deg); display: inline-block; border: 2px solid white; }
+        .main-logo { font-family: 'Oswald'; font-size: 90px; color: var(--white); margin: 0; text-shadow: 4px 4px 0px var(--black); }
+        .edition-badge { background: var(--yellow); color: var(--black); padding: 10px 30px; border-radius: 50px; font-weight: 800; transform: rotate(-3deg); display: inline-block; border: 3px solid var(--black); }
 
-        .glass-card { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 30px; padding: 30px; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        /* INTRO VIDEO */
+        .video-frame { border: 8px solid var(--yellow); border-radius: 30px; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.4); margin-bottom: 30px; background: #000; }
+        video { width: 100%; display: block; }
+
+        .glass-card { background: var(--white); border-radius: 30px; padding: 30px; border: 4px solid var(--black); box-shadow: 10px 10px 0px var(--black); }
         
         .mode-toggle { display: flex; gap: 10px; margin-bottom: 20px; }
-        .m-btn { flex: 1; padding: 12px; border-radius: 10px; border: 2px solid white; background: transparent; color: white; cursor: pointer; font-weight: bold; }
-        .m-btn.active { background: white; color: var(--primary); }
+        .m-btn { flex: 1; padding: 15px; border-radius: 12px; border: 3px solid var(--black); background: var(--yellow); color: var(--black); cursor: pointer; font-weight: 900; text-transform: uppercase; }
+        .m-btn.active { background: var(--blue); color: var(--white); }
 
         .input-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
-        label { display: block; font-weight: 800; font-size: 0.8rem; margin-bottom: 5px; color: var(--turq); text-transform: uppercase; }
-        select { width: 100%; padding: 12px; border-radius: 12px; border: 2px solid black; font-weight: bold; }
+        label { display: block; font-weight: 800; font-size: 0.9rem; margin-bottom: 5px; color: var(--blue); text-transform: uppercase; }
+        select { width: 100%; padding: 12px; border-radius: 12px; border: 3px solid var(--black); font-weight: bold; background: var(--white); }
 
-        .btn-analyze { width: 100%; padding: 20px; background: var(--accent); color: white; font-size: 1.3rem; font-weight: 900; border: 3px solid black; border-radius: 15px; cursor: pointer; box-shadow: 5px 5px 0px black; text-transform: uppercase; }
-        
+        .btn-analyze { width: 100%; padding: 20px; background: var(--yellow); color: var(--black); font-size: 1.5rem; font-weight: 900; border: 4px solid var(--black); border-radius: 15px; cursor: pointer; box-shadow: 8px 8px 0px var(--black); text-transform: uppercase; transition: 0.2s; }
+        .btn-analyze:hover { transform: translate(-2px, -2px); box-shadow: 10px 10px 0px var(--black); }
+
         #resultsArea { margin-top: 30px; display: none; }
         .tabs { display: flex; gap: 5px; }
-        .tab-btn { flex: 1; padding: 15px; background: rgba(0,0,0,0.3); border: 2px solid white; border-bottom: none; border-radius: 15px 15px 0 0; color: white; font-weight: 800; cursor: pointer; }
-        .tab-btn.active { background: white; color: var(--primary); }
+        .tab-btn { flex: 1; padding: 15px; background: var(--yellow); border: 3px solid var(--black); border-bottom: none; border-radius: 15px 15px 0 0; color: var(--black); font-weight: 800; cursor: pointer; }
+        .tab-btn.active { background: var(--white); border-top: 5px solid var(--blue); }
 
-        .tab-content { background: white; color: #222; padding: 25px; border-radius: 0 0 20px 20px; display: none; }
+        .tab-content { background: var(--white); color: var(--black); padding: 30px; border: 3px solid var(--black); border-radius: 0 0 20px 20px; display: none; }
         .tab-content.active { display: block; }
 
-        .quiz-item { background: #f0f4ff; padding: 15px; border-radius: 10px; margin-bottom: 10px; border-left: 5px solid var(--primary); }
-        .opt { display: block; padding: 8px; margin: 5px 0; background: white; border: 1px solid #ddd; border-radius: 5px; cursor: pointer; }
-        .opt:hover { background: #eef; }
+        .btn-tts { background: var(--blue); color: white; border: 3px solid var(--black); padding: 12px 25px; border-radius: 50px; font-weight: 900; cursor: pointer; margin-bottom: 20px; }
+        .btn-stop { background: #ff4d4d; }
 
-        .loader { display: none; width: 40px; height: 40px; border: 4px solid #FFF; border-bottom-color: var(--accent); border-radius: 50%; animation: rotation 1s linear infinite; margin: 10px auto; }
+        .quiz-item { background: #fffde7; padding: 20px; border-radius: 15px; margin-bottom: 15px; border: 2px solid var(--black); }
+        .opt { display: block; padding: 12px; margin: 8px 0; background: white; border: 2px solid #ddd; border-radius: 10px; cursor: pointer; font-weight: 600; }
+        
+        .loader { display: none; width: 50px; height: 50px; border: 6px solid var(--white); border-bottom-color: var(--yellow); border-radius: 50%; animation: rotation 1s linear infinite; margin: 20px auto; }
         @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-/* --- INTRO VIDEO WOW FACTOR --- */
-.video-frame {
-    position: relative;
-    max-width: 700px;
-    margin: 0 auto;
-    border: 6px solid white;
-    border-radius: 30px;
-    overflow: hidden;
-    box-shadow: 0 0 40px rgba(255, 69, 0, 0.6), 0 20px 50px rgba(0,0,0,0.5);
-    transform: perspective(1000px) rotateX(2deg);
-    transition: transform 0.4s ease;
-}
-
-.video-frame:hover {
-    transform: perspective(1000px) rotateX(0deg) scale(1.02);
-}
-
-#introVideo {
-    width: 100%;
-    display: block;
-}
-
-.video-caption {
-    position: absolute;
-    top: 15px;
-    left: 20px;
-    background: var(--accent);
-    color: white;
-    padding: 8px 20px;
-    border-radius: 50px;
-    font-weight: 900;
-    font-size: 0.9rem;
-    box-shadow: 3px 3px 0px black;
-    text-transform: uppercase;
-}
     </style>
 </head>
 <body>
 
     <div class="container">
         <div class="logo-section">
-            <h1 class="main-logo">ELI<span style="color:var(--accent)">5</span></h1>
-            <div class="edition-badge">GLOBAL EDITION 🌍</div>
+            <h1 class="main-logo">ELI<span style="color:var(--yellow)">5</span></h1>
+            <div class="edition-badge">PREMIUM EDITION 🚀</div>
         </div>
 
-
-<!-- FLAMBOYANT INTRO VIDEO SECTION -->
-<div class="intro-section" style="text-align: center; margin-bottom: 30px;">
-    <div class="video-frame">
-        <video id="introVideo" autoplay muted loop playsinline>
-            <source src="INTRO.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <div class="video-caption">Welcome to ELI5 Pro! 🎬</div>
-    </div>
-    <p style="color: white; font-weight: 800; font-size: 1.2rem; margin-top: 15px;">
-        Watch the magic happen! 👇
-    </p>
-</div>
+        <div class="video-frame">
+            <video id="introVideo" autoplay muted loop playsinline>
+                <source src="INTRO.mp4" type="video/mp4">
+            </video>
+        </div>
 
         <div class="glass-card">
             <div class="mode-toggle">
@@ -120,13 +80,13 @@
                     <label>Language</label>
                     <select id="lang">
                         <option value="English">English</option>
-                        <option value="Hindi">Hindi</option>
-                        <option value="Gujarati">Gujarati</option>
-                        <option value="Mandarin">Mandarin</option>
-                        <option value="Spanish">Spanish</option>
-                        <option value="French">French</option>
-                        <option value="Japanese">Japanese</option>
-                        <option value="German">German</option>
+                        <option value="Hindi">Hindi (हिंदी)</option>
+                        <option value="Gujarati">Gujarati (ગુજરાતી)</option>
+                        <option value="Mandarin">Mandarin (普通话)</option>
+                        <option value="Spanish">Spanish (Español)</option>
+                        <option value="French">French (Français)</option>
+                        <option value="Japanese">Japanese (日本語)</option>
+                        <option value="German">German (Deutsch)</option>
                     </select>
                 </div>
                 <div><label>Category</label><select id="cat" onchange="updateSub()"></select></div>
@@ -143,23 +103,27 @@
                 <button class="tab-btn" onclick="tab(event, 'visual')">📺 VISUALS</button>
             </div>
             <div id="story" class="tab-content active">
-                <button onclick="speak()" style="margin-bottom:10px; padding:10px; background:var(--turq); border:none; border-radius:5px; font-weight:bold; cursor:pointer;">🔊 Read Aloud</button>
-                <div id="aiResponse" style="line-height:1.6; font-size:1.1rem;"></div>
+                <div style="display:flex; gap:10px;">
+                    <button class="btn-tts" onclick="speak()"><i class="fas fa-play"></i> Read Aloud</button>
+                    <button class="btn-tts btn-stop" onclick="stopSpeech()"><i class="fas fa-stop"></i> Stop</button>
+                </div>
+                <div id="aiResponse" style="line-height:1.8; font-size:1.2rem; font-weight:500;"></div>
             </div>
-            <div id="quizTab" class="tab-content">
-                <div id="quizContent"></div>
-            </div>
+            <div id="quizTab" class="tab-content"><div id="quizContent"></div></div>
             <div id="visual" class="tab-content">
-                <img id="aiImg" style="width:100%; border-radius:15px; margin-bottom:20px;">
-                <div id="vid" style="position:relative; padding-bottom:56.25%; height:0;"><iframe style="position:absolute; top:0; left:0; width:100%; height:100%; border-radius:15px;"></iframe></div>
+                <img id="aiImg" style="width:100%; border-radius:20px; border:4px solid var(--black); margin-bottom:20px;">
+                <div id="vid" style="position:relative; padding-bottom:56.25%; height:0; border:4px solid var(--black); border-radius:20px; overflow:hidden;">
+                    <iframe style="position:absolute; top:0; left:0; width:100%; height:100%;"></iframe>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-      const PROXY_URL = "https://eli5-api-proxy.sunilvasarkar.workers.dev";
+        const PROXY_URL = "https://eli5-api-proxy.sunilvasarkar.workers.dev";
         let currentMode = "Facts";
 
+        // INSERT THE SUB_CATEGORIES FROM YOUR PYTHON FILE HERE
         const DATA = {
            "Science": [
     "Gravity", "Photosynthesis", "Black Holes", "Microbes/Germs", "Evolution",
@@ -740,8 +704,8 @@
         };
 
 
-// Paste your YouTube IDs here
-const VIDEO_DB = {  // Science
+        // INSERT THE VIDEO_DB FROM YOUR PYTHON FILE HERE
+        const VIDEO_DB = {  // Science
     "Gravity": "EwY6p-r_hyU", "Photosynthesis": "fG3bl2W-twI", 
     "Black Holes": "y8ymU_UBD3I", "Microbes/Germs": "9f55WvF2gBw", 
     "Evolution": "D47d6zW6Bfo", "Atoms and Molecules": "AVVDP_XJHkA", 
@@ -1455,6 +1419,7 @@ const VIDEO_DB = {  // Science
     "DEFAULT": "HAijfhtJs7w" 
 };
 
+
         const catS = document.getElementById('cat'), subS = document.getElementById('sub');
         Object.keys(DATA).forEach(c => catS.innerHTML += `<option>${c}</option>`);
 
@@ -1471,7 +1436,9 @@ const VIDEO_DB = {  // Science
         }
 
         async function generate() {
-            const topic = subS.value, lang = document.getElementById('lang').value;
+            stopSpeech();
+            document.getElementById('introVideo').pause();
+            const topic = subS.value, lang = document.getElementById('lang').value, category = catS.value;
             const loader = document.getElementById('loading'), res = document.getElementById('resultsArea');
             loader.style.display = "block"; res.style.display = "none";
 
@@ -1479,14 +1446,13 @@ const VIDEO_DB = {  // Science
                 const response = await fetch(PROXY_URL, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ topic, lang, mode: currentMode })
+                    body: JSON.stringify({ topic, lang, mode: currentMode, category })
                 });
 
                 const data = await response.json();
                 document.getElementById('aiResponse').innerText = data.explanation;
                 
-                // Build Quiz
-                let qH = "";
+                let qH = `<h3 style="margin-top:0">Test Your Knowledge!</h3>`;
                 data.quiz.forEach((q, i) => {
                     qH += `<div class="quiz-item"><b>${i+1}. ${q.q}</b>`;
                     q.options.forEach((o, oi) => {
@@ -1496,25 +1462,34 @@ const VIDEO_DB = {  // Science
                 });
                 document.getElementById('quizContent').innerHTML = qH;
 
-                document.getElementById('aiImg').src = `https://image.pollinations.ai/prompt/3d-render-of-${topic.replace(/\s+/g, '-')}-pixar-style?nologo=true`;
-              // This line finds the YouTube ID for the selected topic
-const videoId = VIDEO_DB[topic] || VIDEO_DB["DEFAULT"];
-
-// This line updates the video player
-document.querySelector('#vid iframe').src = `https://www.youtube.com/embed/${videoId}`;
+                // IMPROVED IMAGE PROMPT (Fixes Apple iPhone issue)
+                const imgTopic = `${topic}-fruit-nature-no-technology`;
+                document.getElementById('aiImg').src = `https://image.pollinations.ai/prompt/3d-render-of-a-real-edible-${imgTopic}-pixar-style-bright-colors?nologo=true`;
+                
+                document.querySelector('#vid iframe').src = `https://www.youtube.com/embed/${VIDEO_DB[topic] || 'HAijfhtJs7w'}`;
                 
                 loader.style.display = "none"; res.style.display = "block";
             } catch (err) { alert("Brain Freeze! Check connection."); loader.style.display = "none"; }
         }
 
         function check(qi, oi, correct, el) {
-            if(oi === correct) { el.style.background = "#2ecc71"; el.style.color = "white"; }
-            else { el.style.background = "#e74c3c"; el.style.color = "white"; }
+            if(oi === correct) { el.style.background = "#2ecc71"; el.style.color = "white"; el.style.borderColor = "black"; }
+            else { el.style.background = "#e74c3c"; el.style.color = "white"; el.style.borderColor = "black"; }
         }
 
+        function stopSpeech() { window.speechSynthesis.cancel(); }
+
         function speak() {
-            const msg = new SpeechSynthesisUtterance(document.getElementById('aiResponse').innerText);
-            msg.lang = 'en-US'; // Browser will try to match best
+            stopSpeech();
+            const text = document.getElementById('aiResponse').innerText;
+            const msg = new SpeechSynthesisUtterance(text);
+            
+            // NEUTRAL ACCENT LOGIC
+            const voices = window.speechSynthesis.getVoices();
+            const langCode = document.getElementById('lang').value;
+            // Attempt to find a natural high-quality voice
+            msg.voice = voices.find(v => v.lang.includes(langCode) && v.name.includes('Google')) || voices[0];
+            msg.rate = 0.9; // Slightly slower for kids
             window.speechSynthesis.speak(msg);
         }
 
@@ -1523,10 +1498,8 @@ document.querySelector('#vid iframe').src = `https://www.youtube.com/embed/${vid
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(id).classList.add('active'); e.currentTarget.classList.add('active');
         }
-
-
     </script>
-<script>
+    <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('/sw.js')
