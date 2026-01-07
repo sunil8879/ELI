@@ -56,25 +56,32 @@
         @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
         #installBtn {
-    position: relative;
-    bottom: 20px;
-    right: 20px;
-
-    z-index: 9999;
-    background: #0866FF;
+    position: fixed;
+    bottom: 30px; /* Distance from bottom */
+    right: 20px;  /* Distance from right */
+    
+    z-index: 999999; /* Ensures it stays above tabs and videos */
+    
+    background: #7FFFD4;
     color: white;
     border: 4px solid black;
-
-    padding: 14px 28px;
+    padding: 15px 30px;
     border-radius: 50px;
     font-size: 1.1rem;
     font-weight: 900;
-
-    box-shadow: 6px 6px 0 black;
+    
+    /* Flamboyant 3D Shadow */
+    box-shadow: 6px 6px 0px black;
     cursor: pointer;
+    
+    /* Animation for Wow Factor */
+    display: none; /* Initially hidden, shown by JS */
+    transition: transform 0.2s ease;
+}
 
-    display: none;
-    pointer-events: auto !important;
+#installBtn:active {
+    transform: translate(3px, 3px);
+    box-shadow: 2px 2px 0px black;
 }
     </style>
 </head>
@@ -86,7 +93,7 @@
             <div class="edition-badge">PREMIUM EDITION 🚀</div>
         </div>
       <div style="text-align:center; margin-bottom:20px;">
-    <button id="installBtn" style="display:none; background:#0866FF; color:white; border:4px solid black; padding:12px 30px; border-radius:50px; font-weight:900; box-shadow:6px 6px 0px black; cursor:pointer;">
+    <button id="installBtn" style="display:none; background:#7FFFD4; color:white; border:4px solid black; padding:12px 30px; border-radius:50px; font-weight:900; box-shadow:6px 6px 0px black; cursor:pointer;">
         <i class="fas fa-download"></i> INSTALL APP
     </button>
 </div>  
