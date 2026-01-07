@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-  // 1. Set Headers to allow requests from your domain
+  // Allow requests from your domain
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -9,12 +9,16 @@ export default async function handler(req, res) {
   try {
     const { topic, lang, mode, category } = req.body;
 
-    // Use a slightly lower word target to prevent Vercel 10s timeout
-    const lengthGoal = mode === "Story" ? "Long Narrative Story" : "Detailed Facts";
+    // This is the NEW strict prompt
+    const prompt = `
+    Topic: "${topic}", Category: "${category}", Language: "${lang}".
+    Strict Instruction: 
+    1. Use ONLY the native script of ${lang} (e.g., if Hindi, use Devanagari characters only). 
+    2. ABSOLUTELY NO ROMAN/ENGLISH letters for the native language text.
+    3. If the topic is an object like "Apple", check the category "${category}". If it's Food, it's the fruit. If it's Tech, it's the gadget.
+    4. Style: ${mode === "Story" ? "Narrative Story (MUST BE AT LEAST 600 words)" : "Detailed Facts (MUST BE AT LEAST 400 words)"}.
+    5. Generate exactly 5 MCQs in native ${lang} script.
 
-    const prompt = `Topic: ${topic}, Category: ${category}, Language: ${lang}.
-    Style: ${lengthGoal}. Task: Explain for a 5-year-old in native ${lang} script. 
-    Context is ${category}. Generate 5 MCQs in ${lang} script.
     Output JSON: {"explanation": "...", "quiz": [{"q": "...", "options": ["A","B","C","D"], "correct": 0}, ...]}`;
 
     const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
@@ -26,15 +30,9 @@ export default async function handler(req, res) {
       body: JSON.stringify({ 
         model: "llama-3.1-8b-instant", 
         messages: [{ role: "user", content: prompt }], 
-        response_format: { type: "json_object" },
-        max_tokens: 3000 // Limit tokens to prevent timeout
+        response_format: { type: "json_object" }
       })
     });
-
-    if (!response.ok) {
-      const errData = await response.json();
-      return res.status(500).json({ error: errData.error.message });
-    }
 
     const data = await response.json();
     const aiContent = JSON.parse(data.choices[0].message.content);
@@ -42,6 +40,6 @@ export default async function handler(req, res) {
     return res.status(200).json(aiContent);
 
   } catch (err) {
-    return res.status(500).json({ error: "Brain is processing too much. Please try a shorter topic." });
+    return res.status(500).json({ error: "Brain is processing. Please wait." });
   }
 }
