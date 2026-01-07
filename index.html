@@ -63,6 +63,12 @@
             <h1 class="main-logo">ELI<span style="color:var(--yellow)">5</span></h1>
             <div class="edition-badge">PREMIUM EDITION 🚀</div>
         </div>
+        
+        <div style="text-align:center; margin-bottom:20px;">
+    <button id="installBtn" style="display:none; background:#2ecc71; color:white; border:4px solid black; padding:12px 30px; border-radius:50px; font-weight:900; box-shadow:6px 6px 0px black;">
+        <i class="fas fa-download"></i> INSTALL APP
+    </button>
+</div>
 
         <div class="video-frame">
             <video id="introVideo" autoplay muted loop playsinline>
@@ -1436,41 +1442,42 @@
         }
 
         async function generate() {
-            stopSpeech();
-            document.getElementById('introVideo').pause();
-            const topic = subS.value, lang = document.getElementById('lang').value, category = catS.value;
-            const loader = document.getElementById('loading'), res = document.getElementById('resultsArea');
-            loader.style.display = "block"; res.style.display = "none";
+    stopSpeech();
+    document.getElementById('introVideo').pause();
+    const topic = subS.value, lang = document.getElementById('lang').value, category = catS.value;
+    const loader = document.getElementById('loading'), res = document.getElementById('resultsArea');
+    loader.style.display = "block"; res.style.display = "none";
 
-            try {
-                const response = await fetch(PROXY_URL, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ topic, lang, mode: currentMode, category })
-                });
+    try {
+        // Points to your Vercel API
+        const response = await fetch("/api/brain", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ topic, lang, mode: currentMode, category })
+        });
 
-                const data = await response.json();
-                document.getElementById('aiResponse').innerText = data.explanation;
-                
-                let qH = `<h3 style="margin-top:0">Test Your Knowledge!</h3>`;
-                data.quiz.forEach((q, i) => {
-                    qH += `<div class="quiz-item"><b>${i+1}. ${q.q}</b>`;
-                    q.options.forEach((o, oi) => {
-                        qH += `<span class="opt" onclick="check(${i}, ${oi}, ${q.correct}, this)">${o}</span>`;
-                    });
-                    qH += `</div>`;
-                });
-                document.getElementById('quizContent').innerHTML = qH;
+        const data = await response.json();
+        document.getElementById('aiResponse').innerText = data.explanation;
+        
+        // Build 5 Quizzes
+        let qH = `<h3 style="color:black">Test Your Knowledge!</h3>`;
+        data.quiz.forEach((q, i) => {
+            qH += `<div class="quiz-item" style="color:black"><b>${i+1}. ${q.q}</b>`;
+            q.options.forEach((o, oi) => {
+                qH += `<span class="opt" style="color:black" onclick="check(${i}, ${oi}, ${q.correct}, this)">${o}</span>`;
+            });
+            qH += `</div>`;
+        });
+        document.getElementById('quizContent').innerHTML = qH;
 
-                // IMPROVED IMAGE PROMPT (Fixes Apple iPhone issue)
-                const imgTopic = `${topic}-fruit-nature-no-technology`;
-                document.getElementById('aiImg').src = `https://image.pollinations.ai/prompt/3d-render-of-a-real-edible-${imgTopic}-pixar-style-bright-colors?nologo=true`;
-                
-                document.querySelector('#vid iframe').src = `https://www.youtube.com/embed/${VIDEO_DB[topic] || 'HAijfhtJs7w'}`;
-                
-                loader.style.display = "none"; res.style.display = "block";
-            } catch (err) { alert("Brain Freeze! Check connection."); loader.style.display = "none"; }
-        }
+        // FIXED RELEVANT IMAGE (Contextual Prompting)
+        const imgContext = `edible fruit nature organic -phone -gadget`;
+        document.getElementById('aiImg').src = `https://image.pollinations.ai/prompt/3d-pixar-style-render-of-${topic}-as-a-${category}-${imgContext}?width=1080&height=1080&nologo=true`;
+        
+        document.querySelector('#vid iframe').src = `https://www.youtube.com/embed/${VIDEO_DB[topic] || 'HAijfhtJs7w'}`;
+        loader.style.display = "none"; res.style.display = "block";
+    } catch (err) { alert("AI Brain is busy. Try again!"); loader.style.display = "none"; }
+}
 
         function check(qi, oi, correct, el) {
             if(oi === correct) { el.style.background = "#2ecc71"; el.style.color = "white"; el.style.borderColor = "black"; }
@@ -1480,24 +1487,47 @@
         function stopSpeech() { window.speechSynthesis.cancel(); }
 
         function speak() {
-            stopSpeech();
-            const text = document.getElementById('aiResponse').innerText;
-            const msg = new SpeechSynthesisUtterance(text);
-            
-            // NEUTRAL ACCENT LOGIC
-            const voices = window.speechSynthesis.getVoices();
-            const langCode = document.getElementById('lang').value;
-            // Attempt to find a natural high-quality voice
-            msg.voice = voices.find(v => v.lang.includes(langCode) && v.name.includes('Google')) || voices[0];
-            msg.rate = 0.9; // Slightly slower for kids
-            window.speechSynthesis.speak(msg);
-        }
+    stopSpeech();
+    const text = document.getElementById('aiResponse').innerText;
+    const msg = new SpeechSynthesisUtterance(text);
+    
+    // Voice Selection Logic
+    const voices = window.speechSynthesis.getVoices();
+    const langMap = { "English": "en", "Hindi": "hi", "Gujarati": "gu", "Spanish": "es", "French": "fr" };
+    const targetLang = langMap[document.getElementById('lang').value];
 
-        function tab(e, id) {
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(id).classList.add('active'); e.currentTarget.classList.add('active');
+    // FIND BEST VOICE: Prefers Google/Natural voices for native clarity
+    const bestVoice = voices.find(v => v.lang.startsWith(targetLang) && (v.name.includes("Google") || v.name.includes("Natural"))) || 
+                      voices.find(v => v.lang.startsWith(targetLang));
+
+    if (bestVoice) {
+        msg.voice = bestVoice;
+    } else {
+        console.warn("High quality voice not found for this language.");
+    }
+
+    msg.rate = 0.85; // Slightly slower makes pronunciation clearer in Gujarati/Hindi
+    msg.pitch = 1.0; 
+    window.speechSynthesis.speak(msg);
+}
+        
+        let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    document.getElementById('installBtn').style.display = 'inline-block';
+});
+
+document.getElementById('installBtn').addEventListener('click', async () => {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+            document.getElementById('installBtn').style.display = 'none';
         }
+        deferredPrompt = null;
+    }
+});
     </script>
     <script>
   if ('serviceWorker' in navigator) {
