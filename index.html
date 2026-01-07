@@ -57,15 +57,24 @@
         
         #installBtn {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 9999;
-    background: #2ecc71 !important;
-    color: white !important;
-    border: 3px solid black !important;
-    padding: 15px 30px !important;
-    font-size: 1.2rem !important;
-    display: inline-block; /* Changed from none to inline-block to force it to show */
+    top: auto !important;      /* ⬅️ THIS IS THE KEY LINE */
+    bottom: 20px !important;
+    right: 20px !important;
+
+    z-index: 99999;
+
+    background: #2ecc71;
+    color: white;
+    border: 3px solid black;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-weight: 900;
+
+    border-radius: 50px;
+    box-shadow: 6px 6px 0 black;
+    cursor: pointer;
+
+    display: none; /* JS will show it */
 }
     </style>
 </head>
@@ -1524,6 +1533,21 @@
     window.speechSynthesis.speak(msg);
 }
         
+
+
+
+
+function tab(e, id) {
+    // Hide all contents
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    // Deactivate all buttons
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    // Show selected content and activate button
+    document.getElementById(id).classList.add('active');
+    e.currentTarget.classList.add('active');
+}
+
+
 let deferredPrompt;
 
 window.addEventListener('beforeinstallprompt', (e) => {
@@ -1550,18 +1574,6 @@ document.addEventListener('DOMContentLoaded', () => {
         deferredPrompt = null;
     });
 });
-
-
-
-function tab(e, id) {
-    // Hide all contents
-    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-    // Deactivate all buttons
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    // Show selected content and activate button
-    document.getElementById(id).classList.add('active');
-    e.currentTarget.classList.add('active');
-}
     </script>
     <script>
   if ('serviceWorker' in navigator) {
